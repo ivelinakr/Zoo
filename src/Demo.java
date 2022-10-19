@@ -113,8 +113,6 @@ public class Demo {
             // checks selected animal types in input and interacts only with them
             LinkedHashSet<String> entries = getEntries(input);
 
-            System.out.println("SET " + setOfAnimals);
-
             for (String entry : entries) {
                 if (!(setOfAnimals.contains(entry))) {
                     System.out.println(entry + " does not exist in current instance");
