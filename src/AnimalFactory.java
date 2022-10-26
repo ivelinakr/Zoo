@@ -21,7 +21,7 @@ public class AnimalFactory {
     public Animal createAnimal(String animalType) {
         if (animalType == null || animalType.isEmpty()) {
             System.out.println("Please enter a valid animal type.");
-            return null;
+            throw new IllegalArgumentException("Invalid animal type: " + animalType);
         }
         switch (animalType) {
             case "cat":
@@ -45,7 +45,7 @@ public class AnimalFactory {
                 allBirds.add(bird);
                 return bird;
             default:
-                throw new IllegalArgumentException("Unknown channel " + animalType);
+                throw new IllegalArgumentException("Invalid animal type: " + animalType);
         }
     }
 
@@ -62,7 +62,7 @@ public class AnimalFactory {
             case "birds":
                 return allBirds;
             default:
-                throw new IllegalArgumentException("Unknown channel " + type);
+                throw new IllegalArgumentException("Invalid animal type: " + type);
         }
     }
 
