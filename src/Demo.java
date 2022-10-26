@@ -8,11 +8,9 @@ public class Demo {
         String[] arr = s.split(",");
 
         // adds them to LinkedHashSet to retain the order and remove duplicates
-        LinkedHashSet<String> set = new LinkedHashSet<String>();
+        LinkedHashSet<String> set = new LinkedHashSet<>();
 
-        for(int i=0; i < arr.length; i++) {
-            set.add(arr[i]);
-        }
+        Collections.addAll(set, arr);
 
         return set;
     }
@@ -36,7 +34,7 @@ public class Demo {
         int cowCount = 0;
 
         // stores all unique types of animals generated in the current instance
-        Set<String> setOfAnimals = new HashSet<String>();
+        Set<String> setOfAnimals = new HashSet<>();
 
         for (int i = 0; i<totalAnimals; i++) {
             // picks an animal type randomly
@@ -101,13 +99,13 @@ public class Demo {
 
         System.out.println("You entered: " + input);
 
-        if (input == null || input.equals("")) {
+        if (input.equals("")) {
             // interact with all animals when input is null
             ArrayList<Animal> allAnimals = animalFactory.getAllAnimals();
 
-            for (int i = 0; i<allAnimals.size(); i++) {
-                allAnimals.get(i).makeSound();
-                allAnimals.get(i).move();
+            for (Animal animal : allAnimals) {
+                animal.makeSound();
+                animal.move();
             }
         } else {
             // checks selected animal types in input and interacts only with them
