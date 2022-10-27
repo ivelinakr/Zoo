@@ -1,13 +1,15 @@
 /* Singleton Design Pattern */
 import Animals.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AnimalFactory {
-    private ArrayList<Animal> allCats = new ArrayList<>();
-    private ArrayList<Animal> allCows = new ArrayList<>();
-    private ArrayList<Animal> allDogs = new ArrayList<>();
-    private ArrayList<Animal> allHorses = new ArrayList<>();
-    private ArrayList<Animal> allBirds = new ArrayList<>();
+    private HashMap<String,ArrayList<Animal>> animals = new HashMap<>();
+
+    private void addAnimal (String animalType, Animal animal) {
+        animals.putIfAbsent(animalType, new ArrayList<>());
+        animals.get(animalType).add(animal);
+    }
 
     private static AnimalFactory instance = new AnimalFactory();
 
@@ -21,28 +23,29 @@ public class AnimalFactory {
     public Animal createAnimal(String animalType) {
         if (animalType == null || animalType.isEmpty()) {
             System.out.println("Please enter a valid animal type.");
-            throw new IllegalArgumentException("Invalid animal type: " + animalType);
+            throw new IllegalArgumentException("Input is empty");
         }
+
         switch (animalType) {
             case "cat":
                 Cat cat = new Cat();
-                allCats.add(cat);
+                addAnimal(animalType, cat);
                 return cat;
             case "cow":
                 Cow cow = new Cow();
-                allCows.add(cow);
+                addAnimal(animalType, cow);
                 return cow;
             case "dog":
                 Dog dog = new Dog();
-                allDogs.add(dog);
+                addAnimal(animalType, dog);
                 return dog;
             case "horse":
                 Horse horse = new Horse();
-                allHorses.add(horse);
+                addAnimal(animalType, horse);
                 return horse;
             case "bird":
                 Bird bird = new Bird();
-                allBirds.add(bird);
+                addAnimal(animalType, bird);
                 return bird;
             default:
                 throw new IllegalArgumentException("Invalid animal type: " + animalType);
@@ -50,29 +53,16 @@ public class AnimalFactory {
     }
 
     public ArrayList<Animal> getAnimals(String type) {
-        switch (type) {
-            case "cats":
-                return allCats;
-            case "cows":
-                return allCows;
-            case "dogs":
-                return allDogs;
-            case "horses":
-                return allHorses;
-            case "birds":
-                return allBirds;
-            default:
-                throw new IllegalArgumentException("Invalid animal type: " + type);
-        }
+        return animals.get(type);
     }
 
     public ArrayList<Animal> getAllAnimals() {
-        ArrayList<Animal> all = allCats;
-        all.addAll(allCows);
-        all.addAll(allDogs);
-        all.addAll(allHorses);
-        all.addAll(allBirds);
+        ArrayList<Animal> allAnimals = new ArrayList<>();
 
-        return all;
+        for (ArrayList<Animal> entry : animals.values()) {
+            allAnimals.addAll(entry);
+        }
+
+        return allAnimals;
     }
 }

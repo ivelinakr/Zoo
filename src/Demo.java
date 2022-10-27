@@ -1,8 +1,30 @@
 import Animals.Animal;
-
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.*;
 
 public class Demo {
+    public static String getInputFromUser(Set<String> setOfAnimals) {
+        // provides instructions for the user
+        System.out.println("\nEnter animal type to interact with all generated animals of that type");
+        System.out.println("You can choose multiple types by separating them with \",\"");
+        System.out.print("Available types in this instance: ");
+        System.out.print(setOfAnimals);
+        System.out.println("\nIf no animal type is chosen, you will interact with all generated animals");
+
+        // gets input
+        Scanner in = new Scanner(System.in);
+        String input = in.nextLine();
+
+        // normalises input
+        input = input.toLowerCase();
+
+        // removes all whitespaces and non-visible characters (e.g., tab, \n).
+        input = input.replaceAll("\\s+","");
+
+        System.out.println("You entered: " + input);
+        return input;
+    }
+
     public static LinkedHashSet<String> getEntries(String s) {
         // separates entries by ","
         String[] arr = s.split(",");
@@ -13,6 +35,40 @@ public class Demo {
         Collections.addAll(set, arr);
 
         return set;
+    }
+
+    public static void interactWithEach(ArrayList<Animal> animals) {
+        for (Animal animal : animals) {
+            animal.makeSound();
+            animal.move();
+        }
+    }
+
+    public static void interact(String input, AnimalFactory animalFactory, Set<String> setOfAnimals) {
+        if (input.equals("")) {
+            // interact with all animals when input is null
+            interactWithEach(animalFactory.getAllAnimals());
+        } else {
+            // checks selected animal types in input and interacts only with them
+            LinkedHashSet<String> entries = getEntries(input);
+
+            for (String entry : entries) {
+                if (!(setOfAnimals.contains(entry))) {
+                    System.out.println(entry + " does not exist in current instance");
+                } else {
+                    interactWithEach(animalFactory.getAnimals(entry));
+                }
+            }
+        }
+    }
+
+    public static void initializeAnimal(String type, AnimalFactory animalFactory, Set<String> setOfAnimals) {
+        // creates the animal, names the animal and adds it to the unique types of the instance
+        Animal animal = animalFactory.createAnimal(type);
+        String animalName = StringUtils.capitalize(type) + "_" + (animalFactory.getAnimals(type).size());
+        animal.setName(animalName);
+        animal.makeSound();
+        setOfAnimals.add(type);
     }
 
     public static void main(String[] args) {
@@ -27,12 +83,6 @@ public class Demo {
         int totalAnimals = minAnimals + (int) (Math.random() * (maxAnimals - minAnimals));
         System.out.println("Random number of animals to be generated: " + totalAnimals);
 
-        int catCount = 0;
-        int dogCount = 0;
-        int birdCount = 0;
-        int horseCount = 0;
-        int cowCount = 0;
-
         // stores all unique types of animals generated in the current instance
         Set<String> setOfAnimals = new HashSet<>();
 
@@ -44,108 +94,25 @@ public class Demo {
 
             switch (randomNumberForType){
                 case 1:
-                    String catName = "Cat_" + (++catCount);
-                    Animal cat = animalFactory.createAnimal("cat");
-                    cat.setName(catName);
-                    cat.makeSound();
-                    setOfAnimals.add("cat");
+                    initializeAnimal("cat", animalFactory, setOfAnimals);
                     break;
                 case 2:
-                    String dogName = "Dog_" + (++dogCount);
-                    Animal dog = animalFactory.createAnimal("dog");
-                    dog.setName(dogName);
-                    dog.makeSound();
-                    setOfAnimals.add("dog");
+                    initializeAnimal("dog", animalFactory, setOfAnimals);
                     break;
                 case 3:
-                    String birdName = "Bird_" + (++birdCount);
-                    Animal bird = animalFactory.createAnimal("bird");
-                    bird.setName(birdName);
-                    bird.makeSound();
-                    setOfAnimals.add("bird");
+                    initializeAnimal("bird", animalFactory, setOfAnimals);
                     break;
                 case 4:
-                    String horseName = "Horse_" + (++horseCount);
-                    Animal horse = animalFactory.createAnimal("horse");
-                    horse.setName(horseName);
-                    horse.makeSound();
-                    setOfAnimals.add("horse");
+                    initializeAnimal("horse", animalFactory, setOfAnimals);
                     break;
                 case 5:
-                    String cowName = "Cow_" + (++cowCount);
-                    Animal cow = animalFactory.createAnimal("cow");
-                    cow.setName(cowName);
-                    cow.makeSound();
-                    setOfAnimals.add("cow");
+                    initializeAnimal("cow", animalFactory, setOfAnimals);
                     break;
             }
         }
 
-        System.out.println("\nEnter animal type to interact with all generated animals of that type");
-        System.out.println("You can choose multiple types by separating them with \",\"");
-        System.out.print("Available types in this instance: ");
-        System.out.print(setOfAnimals);
-        System.out.println("\nIf no animal type is chosen, you will interact with all generated animals");
+        String input = getInputFromUser(setOfAnimals);
 
-        // get input
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-
-        // normalise input
-        input = input.toLowerCase();
-
-        // removes all whitespaces and non-visible characters (e.g., tab, \n).
-        input = input.replaceAll("\\s+","");
-
-        System.out.println("You entered: " + input);
-
-        if (input.equals("")) {
-            // interact with all animals when input is null
-            ArrayList<Animal> allAnimals = animalFactory.getAllAnimals();
-
-            for (Animal animal : allAnimals) {
-                animal.makeSound();
-                animal.move();
-            }
-        } else {
-            // checks selected animal types in input and interacts only with them
-            LinkedHashSet<String> entries = getEntries(input);
-
-            for (String entry : entries) {
-                if (!(setOfAnimals.contains(entry))) {
-                    System.out.println(entry + " does not exist in current instance");
-                } else if (Objects.equals(entry, "cat")) {
-                    ArrayList<Animal> cats = animalFactory.getAnimals("cats");
-                    for (Animal cat : cats) {
-                        cat.makeSound();
-                        cat.move();
-                    }
-                } else if (Objects.equals(entry, "dog")) {
-                    ArrayList<Animal> dogs = animalFactory.getAnimals("dogs");
-                    for (Animal dog : dogs) {
-                        dog.makeSound();
-                        dog.move();
-                    }
-                } else if (Objects.equals(entry, "cow")) {
-                    ArrayList<Animal> cows = animalFactory.getAnimals("cows");
-                    for (Animal cow : cows) {
-                        cow.makeSound();
-                        cow.move();
-                    }
-                } else if (Objects.equals(entry, "horse")) {
-                    ArrayList<Animal> horses = animalFactory.getAnimals("horses");
-                    for (Animal horse : horses) {
-                        horse.makeSound();
-                        horse.move();
-                    }
-                } else if (Objects.equals(entry, "bird")) {
-                    ArrayList<Animal> birds = animalFactory.getAnimals("birds");
-                    for (Animal bird : birds) {
-                        bird.makeSound();
-                        bird.move();
-                    }
-                }
-            }
-        }
+        interact(input, animalFactory, setOfAnimals);
     }
 }

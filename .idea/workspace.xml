@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d49af117-f543-4e67-a5f1-fb2c97970091" name="Changes" comment="Edited error text">
+    <list default="true" id="d49af117-f543-4e67-a5f1-fb2c97970091" name="Changes" comment="Fixed warnings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AnimalFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AnimalFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Demo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +58,8 @@
       <workItem from="1666019278126" duration="11310000" />
       <workItem from="1666084908087" duration="2785000" />
       <workItem from="1666157432662" duration="10247000" />
-      <workItem from="1666770453321" duration="2070000" />
+      <workItem from="1666770453321" duration="2692000" />
+      <workItem from="1666856831663" duration="8605000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1666165537511</created>
@@ -80,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666770651419</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed warnings">
+      <created>1666772558071</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666772558071</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,6 +110,7 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Removed print message" />
     <MESSAGE value="Edited error text" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited error text" />
+    <MESSAGE value="Fixed warnings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed warnings" />
   </component>
 </project>
